@@ -1,189 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<title>song-list</title>
-	<link rel="stylesheet" type="text/css" href="">
-	<style type="text/css">
-	
-	/* Reset CSS */
-	
-	body, html,
-	ul, li, 
-	h2, 
-	button, nav {
-		margin: 0;
-		padding: 0;
-		border: 0;
-		outline: 0;
-		font-size: 100%;
-		/*vertical-align: baseline;*/
-		background: transparent;
-	}
-
-	body {
-		line-height: 1;
-		--webkit-text-size-adjust: none;
-	}
-
-	img {
-		max-width: 100%;
-	}
-
-	nav, ul, li {
-		list-style: none;
-	}
-
-	a {
-		font-size: 100%;
-		vertical-align: baseline;
-		background-color: transparent;
-		color: #000;
-		text-decoration: none;
-	}
-
-	input, button {
-		vertical-align: middle;
-	}
-
-
-
-	/* song-list */
-	.list {
-		
-		height: auto;
-		width: 100%;
-		margin: 0 auto;
-
-	}
-		.head-list {
-			box-sizing: border-box;
-			margin: 10px 0;
-			width: 100%;
-
-			position: relative;		
-		}
-
-			.head-list>a {
-				width: 70%;
-				display: flex;
-				font-size: 18px;
-				font-weight: border;
-				align-items: center;
-			}
-
-				.head-list>a>img {
-					width: 25px;
-					padding-right: 10px;
-				}
-
-				.head-list>a>span {
-					font-weight: lighter;
-					font-size: 13px;
-					color: #ccc;
-				}
-
-			.head-list>button {
-				width: 80px;
-				/*margin: 10px 0;*/
-				vertical-align: middle;
-
-				position: absolute;
-				right: 0;
-				bottom: 0;
-
-				background-image: url(../src/btn-mul.png);
-				background-repeat: no-repeat;
-				background-position: 10px;
-				background-size: auto 100%;
-
-				font-size: 13px;
-				cursor: pointer;
-
-				padding-left: 10px;
-			}
-
-			ul li:first-child div:nth-child(2) {
-				border-top: 1px solid #cccccc;
-			}
-
-	</style>
+    <meta charset="UTF-8">
+    <title>song-list</title>
+    <link rel="stylesheet" type="text/css" href="reset.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
+
 <body>
-	<div class="list">
-		<div class="head-list">
-			
-			<a href="#">
+    <div class="list">
+        <div class="head-list">
+            <a href="#">
 				<img src="../src/btn-paly.png">
 				播放全部
-				<span style="padding-left: 10px;">(共80首)</span>
+				<span>(共80首)</span>
 				 
 			</a>
-			<button>
-				多选
-			</button>
-		</div>
-		<ul>
-			<li>
-				<div style="display: inline-block; float: left; line-height: 56px; width: 35px; text-align: center; color: #777777;">
-					1
-				</div>
-				<div style="margin-left: 35px; padding-right: 20px; padding-top: 10px; padding-bottom: 10px; height: 100%; position: relative; border-bottom: 1px solid #cccccc;">
-					<div href="#" style="display: inline-block;">
-						<h2 class="title" style="font-size: 18px; padding-bottom: 5px; font-weight: normal;">
-							沙龙
-						</h2>
-						<span style="font-size: 12px; color: #777777;">
-							陈奕迅 - H3M
-						</span>
-					</div>
-					<button style="text-align: center; position: absolute; right: 20px; font-size: 30px; font-weight: bolder; border: 0.5px solid; border-radius: 10px; color: #777; padding: 5px 15px; line-height: 20px; word-spacing: -5px;">
-						
-						<span style="display: inline-block; border: 2px solid #777; border-radius: 2px; vertical-align: middle;"></span>
-						<span style="display: inline-block; border: 2px solid #777; border-radius: 2px;  vertical-align: middle;"></span>
-						<span style="display: inline-block; border: 2px solid #777; border-radius: 2px;  vertical-align: middle;"></span>
+            <button>
+                多选
+            </button>
+        </div>
+        <ul>
+            <li class="selected" data-link="">
+                <div class="id-list">1</div>
+                <div class="content-list">
+                    <h2 class="title">沙龙</h2>
+                    <span>陈奕迅 - H3M</span>
+                    <button>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </button>
+                </div>
+            </li>
+            
+            <li data-link="">
+                <div class="id-list">2</div>
+                <div class="content-list">
+                    <h2 class="title">沙龙2</h2>
+                    <span>陈奕迅 - H3M2</span>
+                    <button>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </button>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <script type="text/javascript">
+    var ul = document.getElementsByTagName('ul')[0];
+    ul.addEventListener('click', function(event) {
 
-					</button>
-				</div>
+    	// 找到自己的所在的 li
+        function getLi(elem, denyElem) {
 
-			</li>
+        	if (elem.tagName.toLowerCase() == denyElem 
+        		|| elem.parentNode.tagName.toLowerCase() == denyElem) {
+        		return elem.tagName.toLowerCase() == denyElem ? 
+        			   elem : elem.parentNode; 
+        	}
 
-		</ul>
-	</div>
-	
+            var result;
+            var isLi = elem.parentNode.tagName.toLowerCase() == 'li';
+            if (isLi) {
+                result = elem.parentNode;
+            } else {
+                result = getLi(elem.parentNode);
+            }
 
-	<div class="list-select">
-		<div class="head-select" style="height: 50px;">
-			
-			<img src="../src/btn-paly.png" style="width: 25px;">
-			
-			<span style="padding-left: 10px;">已选择 0 项</span>
-	 
-			<button style="float: right;">
-				全选
-			</button>
-		</div>
-		<ul>
-			<li>
-				<div style="display: inline-block; float: left; line-height: 56px; width: 35px; text-align: center;">
-					<input type="checkbox" name="">
-				</div>
-				<div style="margin-left: 35px; padding-right: 20px; padding-top: 10px; padding-bottom: 10px; height: 100%; position: relative; border-bottom: 1px solid #cccccc;">
-					<div href="#" style="display: inline-block;">
-						<h2 class="title" style="font-size: 18px; padding-bottom: 5px; font-weight: normal;">
-							沙龙
-						</h2>
-						<span style="font-size: 12px; color: #777777;">
-							陈奕迅 - H3M
-						</span>
-					</div>
-				</div>
+            return result;
+        };
 
-			</li>
+        var li_selet = getLi(event.target, 'button');
+        console.log(li_selet);
 
-		</ul>
-	</div>
-
-
+        // console.log(event.target.parentNode);
+    }, false);
+    </script>
 </body>
+
 </html>
